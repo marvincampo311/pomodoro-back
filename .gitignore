@@ -1,0 +1,35 @@
+# --- SEGURIDAD (CRÍTICO) ---
+# Nunca subir credenciales de base de datos o llaves secretas
+.env
+*.env
+config.php
+# Si usas composer para librerías de PHP
+/pomodoro-back/vendor/
+
+# --- ARCHIVOS DEL SISTEMA / IDE ---
+# Carpetas de configuración de editores
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Archivos temporales de Windows y macOS
+Thumbs.db
+.DS_Store
+ehthumbs.db
+Desktop.ini
+
+# --- LOGS Y TEMPORALES ---
+# Archivos de error de Apache/PHP
+*.log
+error_log
+php_errors.log
+
+# --- FRONTEND ---
+# Si en el futuro usas Node.js/NPM
+node_modules/
+dist/
+.cache/
