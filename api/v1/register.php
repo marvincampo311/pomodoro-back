@@ -1,5 +1,12 @@
 <?php
 // pomodoro-back/api/v1/register.php
+header("Access-Control-Allow-Origin: https://pomodoro-front-phi.vercel.app");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    exit;
+}
 header("Content-Type: application/json");
 require_once '../../config/database.php';
 
