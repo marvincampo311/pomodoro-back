@@ -20,8 +20,10 @@ try {
     
     // Buscamos al usuario por email
     $stmt = $db->prepare("SELECT id, username, password_hash FROM users WHERE email = ?");
-    $stmt->execute([$data->email]);
-    $user = $stmt->fetch();
+    $stmt->bind_param("s", $data->email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
 
     // Verificamos si existe y si la contraseña coincide con el hash
     if ($user && password_verify($data->password, $user['password_hash'])) {

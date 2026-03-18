@@ -24,23 +24,20 @@ try {
     $password_hash = password_hash($data->password, PASSWORD_BCRYPT);
 
     // 2. Preparar la sentencia (Evita SQL Injection)
-    $stmt = $db->prepare("INSERT INTO users (username, email, password_hash) VALUES (:user, :email, :pass)");
-    
-    $stmt->bindParam(':user', $data->username);
-    $stmt->bindParam(':email', $data->email);
-    $stmt->bindParam(':pass', $password_hash);
+    $stmt = $db->prepare("INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $data->username, $data->email, $password_hash);
 
     if ($stmt->execute()) {
         echo json_encode([
             "status" => "success", 
             "message" => "Usuario registrado correctamente",
-            "user_id" => $db->lastInsertId()
+            "user_id" => $db->insert_id
         ]);
     }
 
-} catch (PDOException $e) {
+} catch (Exception $e) {
     // Manejo de errores (ej. email duplicado)
-    if ($e->getCode() == 23000) {
+    if ($db->errno == 1062) {
         echo json_encode(["status" => "error", "message" => "El email o usuario ya existen"]);
     } else {
         echo json_encode(["status" => "error", "message" => "Error interno: " . $e->getMessage()]);
