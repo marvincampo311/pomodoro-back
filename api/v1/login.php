@@ -1,25 +1,17 @@
 <?php
 // pomodoro-back/api/v1/login.php
-header("Access-Control-Allow-Origin: https://pomodoro-front-phi.vercel.app");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
 header("Content-Type: application/json");
 require_once '../../config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(["status" => "error", "message" => "Método no permitido"]);
+    echo json_encode(["status" => "error", "message" => "MÃ©todo no permitido"]);
     exit;
 }
 
 $data = json_decode(file_get_contents("php://input"));
 
 if (empty($data->email) || empty($data->password)) {
-    echo json_encode(["status" => "error", "message" => "Email y contraseña requeridos"]);
+    echo json_encode(["status" => "error", "message" => "Email y contraseÃ±a requeridos"]);
     exit;
 }
 
@@ -28,15 +20,13 @@ try {
     
     // Buscamos al usuario por email
     $stmt = $db->prepare("SELECT id, username, password_hash FROM users WHERE email = ?");
-    $stmt->bind_param("s", $data->email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
+    $stmt->execute([$data->email]);
+    $user = $stmt->fetch();
 
-    // Verificamos si existe y si la contraseña coincide con el hash
+    // Verificamos si existe y si la contraseÃ±a coincide con el hash
     if ($user && password_verify($data->password, $user['password_hash'])) {
-        // En una app Senior real, aquí generaríamos un JWT. 
-        // Por ahora, devolveremos el éxito para el frontend.
+        // En una app Senior real, aquÃ­ generarÃ­amos un JWT. 
+        // Por ahora, devolveremos el Ã©xito para el frontend.
         echo json_encode([
             "status" => "success",
             "message" => "Login exitoso",

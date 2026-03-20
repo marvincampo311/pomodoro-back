@@ -9,10 +9,9 @@ try {
     $pass = password_hash("123456", PASSWORD_BCRYPT);
 
     $stmt = $db->prepare("INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $user, $email, $pass);
-    $stmt->execute();
+    $stmt->execute([$user, $email, $pass]);
 
-    echo "✅ Usuario de prueba creado: marvin_admin / 123456";
+    echo "âœ… Usuario de prueba creado: marvin_admin / 123456";
 } catch (Exception $e) {
-    echo "❌ Error: " . $e->getMessage();
+    echo "âŒ Error: " . $e->getMessage();
 }
