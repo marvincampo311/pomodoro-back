@@ -1,6 +1,6 @@
-# Pomodoro Back (PHP + MySQL)
+# TomaTask Back (PHP + MySQL)
 
-Backend simple para autenticación de usuarios del proyecto Pomodoro.
+Backend simple para autenticación de usuarios del proyecto TomaTask.
 
 ## Tecnologías
 
